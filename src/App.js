@@ -3,9 +3,10 @@ import RecipeAddForm from "./components/RecipeAddForm";
 import { useState, useEffect } from "react";
 
 function App() {
+  // define states
   let [formControlState, setFormControlState] = useState({
     addNewIng: false,
-    ingCounter: 0,
+    ingCounter: 1,
   });
   let [showRecipeState, setRecipeState] = useState([]);
 
@@ -26,14 +27,26 @@ function App() {
     return data;
   }
 
-  // Add new ing
+  // Add new ing in form
   function addIngHandler(e) {
     e.preventDefault();
     setFormControlState({
-      addNewIng: !formControlState.addNewIng,
-      ingCounter: formControlState.ingCounter++,
+      ...formControlState,
+      ingCounter: formControlState.ingCounter + 1,
+      addNewIng: true,
     });
     console.log(formControlState.addNewIng, formControlState.ingCounter);
+  }
+
+  // Remove ing from form
+  function removeIngHandler(e) {
+    e.preventDefault();
+    setFormControlState({
+      ...formControlState,
+      filterArray: e.target.dataset.ingid,
+      // ingCounter: formControlState.ingCounter - 1,
+    });
+    console.log("removed ing");
   }
 
   // Rendering
@@ -41,8 +54,10 @@ function App() {
     <div className="App">
       <RecipeAddForm
         addIng={addIngHandler}
+        removeIng={removeIngHandler}
         allowAddIng={formControlState.addNewIng}
-        ingNum={formControlState.ingCounter}
+        ingCounter={formControlState.ingCounter}
+        filterArray={formControlState.filterArray}
       />
       <h1>{formControlState.ingCounter}</h1>
     </div>
