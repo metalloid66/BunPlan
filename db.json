@@ -1,36 +1,18 @@
 {
   "recipes": {
-    "pizza": {
+    "pizza1": {
+      "description": "some description",
+      "ingredients": {
+        "flour": { "amount": 15, "unit": "pcs" }
+      }
+    },
+    "pizza2": {
       "description": "some description",
       "ingredients": {
         "flour": { "amount": 15, "unit": "pcs" }
       }
     },
     "pizza3": {
-      "description": "some description",
-      "ingredients": {
-        "flour": { "amount": 15, "unit": "pcs" }
-      }
-    },
-    "pizza4": {
-      "description": "some description",
-      "ingredients": {
-        "flour": { "amount": 15, "unit": "pcs" }
-      }
-    },
-    "pizza5": {
-      "description": "some description",
-      "ingredients": {
-        "flour": { "amount": 15, "unit": "pcs" }
-      }
-    },
-    "pizza6": {
-      "description": "some description",
-      "ingredients": {
-        "flour": { "amount": 15, "unit": "pcs" }
-      }
-    },
-    "pizza7": {
       "description": "some description",
       "ingredients": {
         "flour": { "amount": 15, "unit": "pcs" }
