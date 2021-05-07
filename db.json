@@ -1,22 +1,59 @@
 {
-  "recipes": {
-    "pizza1": {
+  "recipes": [
+    {
+      "title": "pizza1",
       "description": "some description",
       "ingredients": {
-        "flour": { "amount": 15, "unit": "pcs" }
-      }
+        "flour": {
+          "amount": 15,
+          "unit": "pcs"
+        }
+      },
+      "id": 0
     },
-    "pizza2": {
+    {
+      "title": "pizza2",
       "description": "some description",
       "ingredients": {
-        "flour": { "amount": 15, "unit": "pcs" }
-      }
+        "flour": {
+          "amount": 15,
+          "unit": "pcs"
+        },
+        "bulgur": {
+          "amount": 15,
+          "unit": "kilos"
+        }
+      },
+      "id": 1
     },
-    "pizza3": {
+    {
+      "title": "pizza3",
       "description": "some description",
       "ingredients": {
-        "flour": { "amount": 15, "unit": "pcs" }
-      }
+        "flour": {
+          "amount": 15,
+          "unit": "pcs"
+        }
+      },
+      "id": 2
+    },
+    {
+      "title": "pizza4",
+      "description": "some description",
+      "ingredients": {},
+      "id": 3
+    },
+    {
+      "title": "Pizza5",
+      "description": "some descriptiton",
+      "ingredients": {
+        "ings": {
+          "amount": 1,
+          "unit": "1",
+          "ingId": 23977
+        }
+      },
+      "id": 4
     }
-  }
+  ]
 }

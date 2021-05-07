@@ -9,14 +9,16 @@ export default function Recipes(props) {
         <h2>Recipes</h2>
         <AddBtn toggleAddForm={props.toggleAddForm} />
       </div>
-      {Object.entries(props.recipes).map((recipe) => {
-        return (
-          <Recipe
-            recipeTitle={recipe[0]}
-            recipeDescription={recipe[1].description}
-          />
-        );
-      })}
+      {props.recipes.length === 0
+        ? "Please Add recipes"
+        : props.recipes.map((recipe) => {
+            return (
+              <Recipe
+                recipeTitle={recipe.title}
+                recipeDescription={recipe.description}
+              />
+            );
+          })}
     </div>
   );
 }

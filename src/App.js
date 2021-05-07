@@ -43,7 +43,7 @@ function App() {
     ]);
   }
 
-  // Remove ing from form
+  // Remove ing from form (UI only)
   function removeIngHandler(e) {
     e.preventDefault();
     setIngsState(
@@ -53,11 +53,23 @@ function App() {
     );
   }
 
+  // Toggle form / recipes
   function toggleAddForm() {
     setControlState({
       ...controlState,
       showRecipes: !controlState.showRecipes,
     });
+  }
+
+  /* Getting Recipe From Form */
+  async function addRecipe(recipe) {
+    const res = await fetch("http://localhost:5000/recipes", {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(recipe),
+    });
+    const data = await res.json();
+    setRecipeState(recipeState.concat([data]));
   }
 
   // Rendering
@@ -72,6 +84,7 @@ function App() {
           removeIng={removeIngHandler}
           addIng={addIngHandler}
           toggleAddForm={toggleAddForm}
+          onAdd={addRecipe}
         />
       )}
     </div>
