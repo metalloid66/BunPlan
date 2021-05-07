@@ -6,7 +6,11 @@ export default function Recipe(props) {
     <div className="recipe-container">
       <div className="recipe-btns">
         <MdModeEdit style={{ paddingBottom: "10px" }} />
-        <IoMdRemoveCircle />
+        <IoMdRemoveCircle
+          onClick={() => {
+            props.onRemove(props.recipeId);
+          }}
+        />
       </div>
       <h3>{props.recipeTitle}</h3>
       <h4>{props.recipeDescription}</h4>

@@ -14,8 +14,10 @@ export default function Recipes(props) {
         : props.recipes.map((recipe) => {
             return (
               <Recipe
+                onRemove={props.onRemove}
                 recipeTitle={recipe.title}
                 recipeDescription={recipe.description}
+                recipeId={recipe.id}
               />
             );
           })}

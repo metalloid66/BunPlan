@@ -72,11 +72,22 @@ function App() {
     setRecipeState(recipeState.concat([data]));
   }
 
+  // Deleting a recipe (UI and Server)
+  async function removeRecipe(id) {
+    await fetch(`http://localhost:5000/recipes/${id}`, { method: "DELETE" });
+
+    setRecipeState(recipeState.filter((recipe) => recipe.id !== id));
+  }
+
   // Rendering
   return (
     <div className="App">
       {controlState.showRecipes ? (
-        <Recipes recipes={recipeState} toggleAddForm={toggleAddForm} />
+        <Recipes
+          recipes={recipeState}
+          toggleAddForm={toggleAddForm}
+          onRemove={removeRecipe}
+        />
       ) : null}
       {controlState.showRecipes ? null : (
         <RecipeAddForm
