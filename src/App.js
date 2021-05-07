@@ -53,7 +53,7 @@ function App() {
     );
   }
 
-  // Toggle form / recipes
+  // Toggle form recipes
   function toggleAddForm() {
     setControlState({
       ...controlState,
@@ -61,7 +61,7 @@ function App() {
     });
   }
 
-  /* Getting Recipe From Form */
+  /* Adding Recipe From Form */
   async function addRecipe(recipe) {
     const res = await fetch("http://localhost:5000/recipes", {
       method: "POST",
@@ -79,6 +79,17 @@ function App() {
     setRecipeState(recipeState.filter((recipe) => recipe.id !== id));
   }
 
+  // Updating a recipe (UI and Server)
+  // async function editRecipe(id) {
+  //   const res = await fetch(`http://localhost:5000/recipes/${id}`, {
+  //     method: "PUT",
+  //     headers: { "Content-type": "application/json" },
+  //     body: JSON.stringify({ title: "edited recipe" }),
+  //   });
+  //   const data = await res.json();
+  //   setRecipeState(recipeState.concat([data]));
+  // }
+
   // Rendering
   return (
     <div className="App">
@@ -87,6 +98,7 @@ function App() {
           recipes={recipeState}
           toggleAddForm={toggleAddForm}
           onRemove={removeRecipe}
+          // onEdit={editRecipe}
         />
       ) : null}
       {controlState.showRecipes ? null : (
