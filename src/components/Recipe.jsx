@@ -1,15 +1,23 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import { MdModeEdit } from "react-icons/md";
 import { IoMdRemoveCircle } from "react-icons/io";
 export default function Recipe(props) {
+  // Toggle Recipe Details
+  let [showRecDet, setRecDet] = useState(false);
+  function toggleRecDet() {
+    setRecDet(!showRecDet);
+  }
+
   return (
     <div className="recipe-container">
       <div className="recipe-btns">
         <MdModeEdit
           style={{ paddingBottom: "10px" }}
-          // onClick={() => {
-          //   props.onEdit(props.recipeId);
-          // }}
+          onClick={() => {
+            props.onEdit(props.recipeId);
+            setRecDet((showRecDet = true));
+          }}
         />
         <IoMdRemoveCircle
           onClick={() => {
@@ -17,8 +25,21 @@ export default function Recipe(props) {
           }}
         />
       </div>
-      <h3>{props.recipeTitle}</h3>
-      <h4>{props.recipeDescription}</h4>
+      <h3 onClick={toggleRecDet} style={{ cursor: "pointer" }}>
+        {props.recipeTitle}
+      </h3>
+      {showRecDet ? (
+        <div>
+          <h4>{props.recipeDescription}</h4>
+          {Object.entries(props.recipeIngredients).map((ing) => {
+            return (
+              <p>
+                {ing[0]} {ing[1].amount} {ing[1].unit} <br />
+              </p>
+            );
+          })}
+        </div>
+      ) : null}
     </div>
   );
 }

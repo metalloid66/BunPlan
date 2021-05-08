@@ -14,7 +14,14 @@ function App() {
   ]);
 
   // Control States
-  let [controlState, setControlState] = useState({ showRecipes: true });
+  let [controlState, setControlState] = useState({
+    showRecipes: true,
+    showEdit: false,
+  });
+
+  // Expermental to edit state
+  let [recipeToEdit, setRecipeToEdit] = useState({});
+  let [recipeToEditIngs, setRecipeToEditIngs] = useState();
 
   /* End of Define states */
 
@@ -44,7 +51,7 @@ function App() {
   }
 
   // Remove ing from form (UI only)
-  function removeIngHandler(e) {
+  function removeIngHandlerUI(e) {
     e.preventDefault();
     setIngsState(
       ingsState.filter((ing) => {
@@ -58,6 +65,7 @@ function App() {
     setControlState({
       ...controlState,
       showRecipes: !controlState.showRecipes,
+      showEdit: false,
     });
   }
 
@@ -80,15 +88,33 @@ function App() {
   }
 
   // Updating a recipe (UI and Server)
-  // async function editRecipe(id) {
-  //   const res = await fetch(`http://localhost:5000/recipes/${id}`, {
-  //     method: "PUT",
-  //     headers: { "Content-type": "application/json" },
-  //     body: JSON.stringify({ title: "edited recipe" }),
-  //   });
-  //   const data = await res.json();
-  //   setRecipeState(recipeState.concat([data]));
-  // }
+  async function editRecipe(id) {
+    setControlState({
+      ...controlState,
+      showRecipes: !controlState.showRecipes,
+      showEdit: true,
+    });
+    let toEditRecipe = await fetch(`http://localhost:5000/recipes/${id}`);
+    let toEditRecipeData = await toEditRecipe.json();
+
+    setRecipeToEditIngs(Object.entries(toEditRecipeData.ingredients));
+    let arrayIngIDS = [];
+    Object.entries(toEditRecipeData.ingredients).forEach((el) => {
+      arrayIngIDS.push({ id: el[1].id });
+    });
+    setIngsState(arrayIngIDS);
+    setRecipeToEdit(toEditRecipeData);
+  }
+
+  async function finishEdit(id, editedRecipe) {
+    const res = await fetch(`http://localhost:5000/recipes/${id}`, {
+      method: "PUT",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(editedRecipe),
+    });
+    const data = await res.json();
+    setRecipeState(recipeState.concat([data]));
+  }
 
   // Rendering
   return (
@@ -98,16 +124,20 @@ function App() {
           recipes={recipeState}
           toggleAddForm={toggleAddForm}
           onRemove={removeRecipe}
-          // onEdit={editRecipe}
+          onEdit={editRecipe}
         />
       ) : null}
       {controlState.showRecipes ? null : (
         <RecipeAddForm
           ings={ingsState}
-          removeIng={removeIngHandler}
+          removeIngUI={removeIngHandlerUI}
           addIng={addIngHandler}
           toggleAddForm={toggleAddForm}
           onAdd={addRecipe}
+          showEdit={controlState.showEdit}
+          finishEdit={finishEdit}
+          recipeToEdit={recipeToEdit}
+          recipeToEditIngs={recipeToEditIngs}
         />
       )}
     </div>

@@ -10,11 +10,21 @@ export default function RecipeAddForm(props) {
   let [recipeDes, setRecipeDes] = useState("");
   let [recipeIngs, setRecipeIngs] = useState({});
 
-  // handler the ingredients
+  // handling the ingredients
   let [ingTitle, setIngTitle] = useState("");
   let [ingAmount, setIngAmount] = useState(1);
   let [ingUnit, setIngUnit] = useState("");
   let [ingId, setIngId] = useState(0);
+
+  useEffect(() => {
+    if (props.showEdit == true) {
+      console.log(props.recipeToEdit);
+      setRecipeName(props.recipeToEdit?.title);
+      setRecipeDes(props.recipeToEdit?.description);
+    } else {
+      console.log("add");
+    }
+  }, []);
 
   function idGetter(id) {
     setIngId(id);
@@ -32,12 +42,13 @@ export default function RecipeAddForm(props) {
       [ingTitle]: {
         amount: ingAmount,
         unit: ingUnit,
-        ingId: ingId,
+        id: ingId,
       },
     });
   }
 
-  function removeIngHandler(e) {
+  // Remove ing from form (Server only)
+  function removeIngServHandler(e) {
     e.preventDefault();
     setRecipeIngs(
       Object.fromEntries(
@@ -52,16 +63,26 @@ export default function RecipeAddForm(props) {
   function onSubmitFunc(e) {
     e.preventDefault();
 
-    props.onAdd({
-      title: recipeName,
-      description: recipeDes,
-      ingredients: {
-        ...recipeIngs,
-        // flour: { amount: 15, unit: "pcs" },
-        // bulgur: { amount: 15, unit: "pcs" },
-      },
-    });
-    alert("You have added a recipe");
+    if (!props.showEdit) {
+      props.onAdd({
+        title: recipeName,
+        description: recipeDes,
+        ingredients: {
+          ...recipeIngs,
+          // flour: { amount: 15, unit: "pcs" },
+          // bulgur: { amount: 15, unit: "pcs" },
+        },
+      });
+      alert("You have added a recipe");
+    } else {
+      props.finishEdit(props.recipeToEdit.id, {
+        title: recipeName,
+        description: recipeDes,
+        ingredients: { ...recipeIngs },
+      });
+      alert("You have Edited a recipe");
+    }
+
     props.toggleAddForm();
   }
 
@@ -85,20 +106,25 @@ export default function RecipeAddForm(props) {
           required
         />
 
-        {props.ings.map((ing) => {
+        {props.ings.map((ing, i) => {
           return (
             <RecipeAddFormIng
               key={ing.id}
               id={ing.id}
-              removeTwo={removeIngHandler}
-              removeIng={props.removeIng}
+              removeIngServ={removeIngServHandler}
+              removeIngUI={props.removeIngUI}
               titleUpdater={titleUpdater}
               amountUpdater={amountUpdater}
               unitUpdater={unitUpdater}
               idGetter={idGetter}
+              showEdit={props.showEdit}
+              // initialEditIngs={
+              //   Object.entries(props.recipeToEdit.ingredients)[i]
+              // }
             />
           );
         })}
+
         <AddIngBtn addIng={props.addIng} />
         <input type="submit" value="Save Recipe" className="submit-form-btn" />
       </form>

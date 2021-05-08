@@ -15,9 +15,10 @@ export default function Recipes(props) {
             return (
               <Recipe
                 onRemove={props.onRemove}
-                // onEdit={props.onEdit}
+                onEdit={props.onEdit}
                 recipeTitle={recipe.title}
                 recipeDescription={recipe.description}
+                recipeIngredients={recipe.ingredients}
                 recipeId={recipe.id}
               />
             );

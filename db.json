@@ -1,3 +1,21 @@
 {
-  "recipes": []
+  "recipes": [
+    {
+      "title": "Pizza",
+      "description": "some description",
+      "ingredients": {
+        "ing1": {
+          "amount": 1,
+          "unit": "pc",
+          "id": 72902
+        },
+        "ing2": {
+          "amount": 1,
+          "unit": "pc",
+          "id": 94013
+        }
+      },
+      "id": 1
+    }
+  ]
 }

@@ -6,6 +6,17 @@ export default function RecipeAddFormIng(props) {
   let [ingTitle, setIngTitle] = useState("");
   let [ingAmount, setIngAmount] = useState(1);
   let [ingUnit, setIngUnit] = useState("");
+
+  useEffect(() => {
+    if (props.showEdit) {
+      setIngTitle(props.initialEditIngs?.[0]);
+      setIngAmount(props.editIngAmount?.[1]?.amount);
+      setIngUnit(props.editIngUnit?.[1].unit);
+    } else {
+      console.log("add");
+    }
+  }, []);
+
   return (
     <div className="add-form-ing" data-id={props.id}>
       <input
@@ -42,8 +53,8 @@ export default function RecipeAddFormIng(props) {
       <GrFormSubtract
         data-removeid={props.id}
         onClick={(e) => {
-          props.removeIng(e);
-          props.removeTwo(e);
+          props.removeIngUI(e);
+          props.removeIngServ(e);
         }}
       />
     </div>

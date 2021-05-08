@@ -45,6 +45,11 @@
   transform: translateY(50%);
 }
 
+.recipe-btns > * {
+  cursor: pointer;
+  font-size: 15px;
+}
+
 /* RecipeAddForm */
 .close-btn {
   background-color: #ba000d;
