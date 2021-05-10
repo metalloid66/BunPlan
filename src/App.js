@@ -1,5 +1,6 @@
 import Recipes from "./components/Recipes";
 import RecipeAddForm from "./components/RecipeAddForm";
+// import SomeForm from "./components/SomeForm"
 import { useState, useEffect } from "react";
 
 function App() {
@@ -8,20 +9,19 @@ function App() {
   // Recipe States
   let [recipeState, setRecipeState] = useState([]);
 
-  // Ingrident States
-  let [ingsState, setIngsState] = useState([
-    { id: Math.floor(Math.random() * 100000 + 1) },
-  ]);
+  // Ingrident States --
 
   // Control States
   let [controlState, setControlState] = useState({
     showRecipes: true,
     showEdit: false,
+    allowEdit: false,
   });
 
   // Expermental to edit state
   let [recipeToEdit, setRecipeToEdit] = useState({});
-  let [recipeToEditIngs, setRecipeToEditIngs] = useState();
+  // let [recipeToEditIngs, setRecipeToEditIngs] = useState({});
+  let [idToEdit, setIdToEdit] = useState({});
 
   /* End of Define states */
 
@@ -32,7 +32,7 @@ function App() {
       setRecipeState(recipesFromServer);
     };
     getRecipes();
-  }, []);
+  });
 
   // Fetch reipes from backend
   async function fetchRecipes() {
@@ -41,24 +41,9 @@ function App() {
     return data;
   }
 
-  // Add new ing in form
-  function addIngHandler(e) {
-    e.preventDefault();
-    setIngsState([
-      ...ingsState,
-      { id: Math.floor(Math.random() * 100000 + 1) },
-    ]);
-  }
+  // Add new ing in form  --
 
-  // Remove ing from form (UI only)
-  function removeIngHandlerUI(e) {
-    e.preventDefault();
-    setIngsState(
-      ingsState.filter((ing) => {
-        return ing.id !== Number(e.target.dataset.removeid);
-      })
-    );
-  }
+  // Remove ing from form (UI only) --
 
   // Toggle form recipes
   function toggleAddForm() {
@@ -67,6 +52,7 @@ function App() {
       showRecipes: !controlState.showRecipes,
       showEdit: false,
     });
+    setRecipeToEdit({});
   }
 
   /* Adding Recipe From Form */
@@ -87,24 +73,24 @@ function App() {
     setRecipeState(recipeState.filter((recipe) => recipe.id !== id));
   }
 
-  // Updating a recipe (UI and Server)
+  // Updating a recipe (UI and Server) expermental
   async function editRecipe(id) {
     setControlState({
       ...controlState,
       showRecipes: !controlState.showRecipes,
       showEdit: true,
+      allowEdit: true,
     });
-    let toEditRecipe = await fetch(`http://localhost:5000/recipes/${id}`);
-    let toEditRecipeData = await toEditRecipe.json();
-
-    setRecipeToEditIngs(Object.entries(toEditRecipeData.ingredients));
-    let arrayIngIDS = [];
-    Object.entries(toEditRecipeData.ingredients).forEach((el) => {
-      arrayIngIDS.push({ id: el[1].id });
-    });
-    setIngsState(arrayIngIDS);
-    setRecipeToEdit(toEditRecipeData);
+    setIdToEdit(id);
   }
+  function disallowEdit() {
+    setControlState({
+      ...controlState,
+      allowEdit: false,
+    });
+  }
+
+  // update ings --
 
   async function finishEdit(id, editedRecipe) {
     const res = await fetch(`http://localhost:5000/recipes/${id}`, {
@@ -129,15 +115,19 @@ function App() {
       ) : null}
       {controlState.showRecipes ? null : (
         <RecipeAddForm
-          ings={ingsState}
-          removeIngUI={removeIngHandlerUI}
-          addIng={addIngHandler}
+          // ings={ingsState}
+          // removeIngUI={removeIngHandlerUI}
+          // addIng={addIngHandler}
           toggleAddForm={toggleAddForm}
           onAdd={addRecipe}
           showEdit={controlState.showEdit}
+          allowEdit={controlState.allowEdit}
+          disallowEdit={disallowEdit}
           finishEdit={finishEdit}
+          idToEdit={idToEdit}
+          // updateIngs={updateIngs}
           recipeToEdit={recipeToEdit}
-          recipeToEditIngs={recipeToEditIngs}
+          // recipeToEditIngs={recipeToEditIngs}
         />
       )}
     </div>

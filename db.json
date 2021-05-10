@@ -1,21 +1,33 @@
 {
   "recipes": [
     {
-      "title": "Pizza",
-      "description": "some description",
-      "ingredients": {
-        "ing1": {
-          "amount": 1,
-          "unit": "pc",
-          "id": 72902
-        },
-        "ing2": {
-          "amount": 1,
-          "unit": "pc",
-          "id": 94013
+      "title": "pizzza2",
+      "description": "foogdaspizza",
+      "ingredients": [
+        {
+          "ingTitle": "ing3",
+          "amount": "12",
+          "unit": "pcs"
         }
-      },
-      "id": 1
+      ],
+      "id": 2
+    },
+    {
+      "title": "pizza555",
+      "description": "wo",
+      "ingredients": [
+        {
+          "ingTitle": "ing3",
+          "amount": "10",
+          "unit": "pcs"
+        },
+        {
+          "ingTitle": "ing5",
+          "amount": "21",
+          "unit": "pcs"
+        }
+      ],
+      "id": 3
     }
   ]
 }

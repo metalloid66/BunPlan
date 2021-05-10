@@ -1,90 +1,79 @@
 import React from "react";
-import { IoMdSettings } from "react-icons/io";
 import { useState, useEffect } from "react";
-
-import RecipeAddFormIng from "./RecipeAddFormIng";
-import AddIngBtn from "./AddIngBtn";
 
 export default function RecipeAddForm(props) {
   let [recipeName, setRecipeName] = useState("");
   let [recipeDes, setRecipeDes] = useState("");
-  let [recipeIngs, setRecipeIngs] = useState({});
+  let [recipeIngs, setRecipeIngs] = useState([]);
 
-  // handling the ingredients
-  let [ingTitle, setIngTitle] = useState("");
-  let [ingAmount, setIngAmount] = useState(1);
-  let [ingUnit, setIngUnit] = useState("");
-  let [ingId, setIngId] = useState(0);
+  // handling the edit
 
   useEffect(() => {
-    if (props.showEdit == true) {
-      console.log(props.recipeToEdit);
-      setRecipeName(props.recipeToEdit?.title);
-      setRecipeDes(props.recipeToEdit?.description);
-    } else {
-      console.log("add");
+    if (props.allowEdit) {
+      async function decfunction() {
+        let toEditRecipe = await fetch(
+          `http://localhost:5000/recipes/${props.idToEdit}`
+        );
+        let toEditRecipeData = await toEditRecipe.json();
+        setRecipeName(toEditRecipeData.title);
+        setRecipeDes(toEditRecipeData.description);
+        setRecipeIngs(toEditRecipeData.ingredients);
+        console.log(recipeIngs);
+      }
+      decfunction();
+      props.disallowEdit();
     }
-  }, []);
-
-  function idGetter(id) {
-    setIngId(id);
-  }
-  function titleUpdater(title) {
-    setIngTitle(title);
-  }
-  function amountUpdater(amount) {
-    setIngAmount(amount);
-  }
-  function unitUpdater(unit) {
-    setIngUnit(unit);
-    setRecipeIngs({
-      ...recipeIngs,
-      [ingTitle]: {
-        amount: ingAmount,
-        unit: ingUnit,
-        id: ingId,
-      },
-    });
-  }
-
-  // Remove ing from form (Server only)
-  function removeIngServHandler(e) {
-    e.preventDefault();
-    setRecipeIngs(
-      Object.fromEntries(
-        Object.entries(recipeIngs).filter((recipeIng) => {
-          return recipeIng[1].ingId !== Number(e.target.dataset.removeid);
-        })
-      )
-    );
-  }
-
+  });
   // Submit the form
   function onSubmitFunc(e) {
     e.preventDefault();
-
     if (!props.showEdit) {
+      console.log(recipeIngs);
       props.onAdd({
         title: recipeName,
         description: recipeDes,
-        ingredients: {
-          ...recipeIngs,
-          // flour: { amount: 15, unit: "pcs" },
-          // bulgur: { amount: 15, unit: "pcs" },
-        },
+        ingredients: recipeIngs,
       });
       alert("You have added a recipe");
     } else {
-      props.finishEdit(props.recipeToEdit.id, {
+      props.finishEdit(props.idToEdit, {
         title: recipeName,
         description: recipeDes,
-        ingredients: { ...recipeIngs },
+        ingredients: recipeIngs,
       });
       alert("You have Edited a recipe");
     }
-
     props.toggleAddForm();
   }
+
+  function handleAddIng(e) {
+    e.preventDefault();
+    const ing = {
+      ingTitle: "",
+      amount: "",
+      unit: "",
+    };
+    setRecipeIngs((prev) => [...prev, ing]);
+  }
+  function onChangeIngs(event, index) {
+    event.preventDefault();
+    event.persist();
+    setRecipeIngs((prev) => {
+      return prev.map((ing, i) => {
+        if (i !== index) {
+          return ing;
+        }
+        return {
+          ...ing,
+          [event.target.name]: event.target.value,
+        };
+      });
+    });
+  }
+  const handleRemoveIng = (e, index) => {
+    e.preventDefault();
+    setRecipeIngs((prev) => prev.filter((item) => item !== prev[index]));
+  };
 
   return (
     <div className="add-form-container">
@@ -105,27 +94,35 @@ export default function RecipeAddForm(props) {
           onChange={(e) => setRecipeDes(e.target.value)}
           required
         />
-
-        {props.ings.map((ing, i) => {
+        {recipeIngs.map((ing, index) => {
           return (
-            <RecipeAddFormIng
-              key={ing.id}
-              id={ing.id}
-              removeIngServ={removeIngServHandler}
-              removeIngUI={props.removeIngUI}
-              titleUpdater={titleUpdater}
-              amountUpdater={amountUpdater}
-              unitUpdater={unitUpdater}
-              idGetter={idGetter}
-              showEdit={props.showEdit}
-              // initialEditIngs={
-              //   Object.entries(props.recipeToEdit.ingredients)[i]
-              // }
-            />
+            <div className="add-form-ing" key={`ing-${index}`}>
+              <input
+                placeholder="Ing name"
+                name="ingTitle"
+                type="text"
+                onChange={(e) => onChangeIngs(e, index)}
+                value={ing.ingTitle}
+              />
+              <input
+                placeholder="Amount"
+                name="amount"
+                type="number"
+                onChange={(e) => onChangeIngs(e, index)}
+                value={ing.amount}
+              />
+              <input
+                placeholder="Unit"
+                name="unit"
+                type="text"
+                onChange={(e) => onChangeIngs(e, index)}
+                value={ing.unit}
+              />
+              <button onClick={(e) => handleRemoveIng(e, index)}>X</button>
+            </div>
           );
         })}
-
-        <AddIngBtn addIng={props.addIng} />
+        <button onClick={handleAddIng}>+</button>
         <input type="submit" value="Save Recipe" className="submit-form-btn" />
       </form>
     </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { MdModeEdit } from "react-icons/md";
 import { IoMdRemoveCircle } from "react-icons/io";
 export default function Recipe(props) {
@@ -31,10 +31,11 @@ export default function Recipe(props) {
       {showRecDet ? (
         <div>
           <h4>{props.recipeDescription}</h4>
-          {Object.entries(props.recipeIngredients).map((ing) => {
+          {Object.entries(props.recipeIngredients).map((ing, index) => {
             return (
-              <p>
-                {ing[0]} {ing[1].amount} {ing[1].unit} <br />
+              <p key={`ing-${index}`}>
+                {ing[1].ingTitle} {ing[1].amount} {ing[1].unit}
+                <br />
               </p>
             );
           })}

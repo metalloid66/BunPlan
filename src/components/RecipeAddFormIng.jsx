@@ -1,55 +1,47 @@
 import React from "react";
-import { GrAdd, GrFormSubtract } from "react-icons/gr";
+import { GrFormSubtract } from "react-icons/gr";
+import { GiRapidshareArrow } from "react-icons/gi";
 import { useState, useEffect } from "react";
 
 export default function RecipeAddFormIng(props) {
-  let [ingTitle, setIngTitle] = useState("");
-  let [ingAmount, setIngAmount] = useState(1);
-  let [ingUnit, setIngUnit] = useState("");
-
-  useEffect(() => {
-    if (props.showEdit) {
-      setIngTitle(props.initialEditIngs?.[0]);
-      setIngAmount(props.editIngAmount?.[1]?.amount);
-      setIngUnit(props.editIngUnit?.[1].unit);
-    } else {
-      console.log("add");
-    }
-  }, []);
+  // let [ingTitle, setIngTitle] = useState();
+  // let [ingAmount, setIngAmount] = useState();
+  // let [ingUnit, setIngUnit] = useState();
+  function titleUpdater(e) {
+    props.titleUpdater(e.target.value);
+    props.idGetter(props.id);
+  }
+  function amountUpdater(e) {
+    props.amountUpdater(e.target.value);
+  }
+  function unitUpdater(e) {
+    props.unitUpdater(e.target.value);
+  }
 
   return (
     <div className="add-form-ing" data-id={props.id}>
       <input
         type="text"
         placeholder="Ingredient Name"
-        onChange={(e) => {
-          setIngTitle(e.target.value);
-          props.titleUpdater(e.target.value);
-          props.idGetter(props.id);
-        }}
-        value={ingTitle}
+        onChange={titleUpdater}
+        value={props.ingTitle}
         required
       />
       <input
         type="number"
         placeholder="Amount"
-        onChange={(e) => {
-          setIngAmount(e.target.value);
-          props.amountUpdater(e.target.value);
-        }}
-        value={ingAmount}
+        onChange={amountUpdater}
+        value={props.ingAmount}
         required
       />
       <input
         type="text"
         placeholder="Unit"
-        onChange={(e) => {
-          setIngUnit(e.target.value);
-          props.unitUpdater(e.target.value);
-        }}
-        value={ingUnit}
+        onChange={unitUpdater}
+        value={props.ingUnit}
         required
       />
+      <GiRapidshareArrow data-adding={props.id} onClick={props.submitIng} />
       <GrFormSubtract
         data-removeid={props.id}
         onClick={(e) => {

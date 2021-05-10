@@ -11,9 +11,10 @@ export default function Recipes(props) {
       </div>
       {props.recipes.length === 0
         ? "Please Add recipes"
-        : props.recipes.map((recipe) => {
+        : props.recipes.map((recipe, index) => {
             return (
               <Recipe
+                key={`recipe-${index}`}
                 onRemove={props.onRemove}
                 onEdit={props.onEdit}
                 recipeTitle={recipe.title}
