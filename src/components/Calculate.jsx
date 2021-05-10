@@ -17,19 +17,32 @@ export default function Calculate() {
   function addRecipeToCook(e, recipe) {
     e.preventDefault();
     setRecipesToCook([...recipesToCook, recipe]);
-    ingsToBuyUpdater(recipe.ingredients);
+    // ingsToBuyUpdater(recipe.ingredients);
   }
+  useEffect(() => {
+    ingsToBuyUpdater(recipesToCook);
+  }, [recipesToCook]);
+  useEffect(() => {
+    calcFinal();
+  }, [ingsToBuy]);
 
   // Remove Recipe From Cook
   function removeRecipeFromCook(e, index) {
     e.preventDefault();
     setRecipesToCook(recipesToCook.filter((_, i) => i !== index));
-
-    // ingsToBuyUpdater([]);
+    // ingsToBuyUpdater(recipesToCook);
   }
+
   // Ingridents to buy
-  function ingsToBuyUpdater(ingsOfRecipes) {
-    setIngsToBuy([...ingsToBuy, ingsOfRecipes]);
+  function ingsToBuyUpdater(recipes) {
+    let ingsOfRecipes = [];
+    recipes.forEach((recipe) => {
+      ingsOfRecipes.push(recipe.ingredients);
+    });
+    // setIngsToBuy([...ingsToBuy, ingsOfRecipes]);
+    setIngsToBuy(ingsOfRecipes);
+  }
+  function calcFinal() {
     let ingsFlat = ingsToBuy.flat();
     let finalResult = [];
     for (let i = 0; i < ingsFlat.length; i++) {
