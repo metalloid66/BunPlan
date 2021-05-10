@@ -1,5 +1,7 @@
 import Recipes from "./components/Recipes";
 import RecipeAddForm from "./components/RecipeAddForm";
+import Calculate from "./components/Calculate";
+
 // import SomeForm from "./components/SomeForm"
 import { useState, useEffect } from "react";
 
@@ -9,11 +11,11 @@ function App() {
   // Recipe States
   let [recipeState, setRecipeState] = useState([]);
 
-  // Ingrident States --
-
   // Control States
   let [controlState, setControlState] = useState({
     showRecipes: true,
+    showAddForm: false,
+    showCalculate: false,
     showEdit: false,
     allowEdit: false,
   });
@@ -32,7 +34,7 @@ function App() {
       setRecipeState(recipesFromServer);
     };
     getRecipes();
-  });
+  }, []);
 
   // Fetch reipes from backend
   async function fetchRecipes() {
@@ -41,18 +43,25 @@ function App() {
     return data;
   }
 
-  // Add new ing in form  --
-
-  // Remove ing from form (UI only) --
-
   // Toggle form recipes
   function toggleAddForm() {
     setControlState({
       ...controlState,
       showRecipes: !controlState.showRecipes,
+      showAddForm: !controlState.showAddForm,
       showEdit: false,
     });
     setRecipeToEdit({});
+  }
+
+  // Toggle Calculate
+  function toggleCalculate(e) {
+    e.preventDefault();
+    setControlState({
+      ...controlState,
+      showRecipes: !controlState.showRecipes,
+      showCalculate: !controlState.showCalculate,
+    });
   }
 
   /* Adding Recipe From Form */
@@ -73,11 +82,12 @@ function App() {
     setRecipeState(recipeState.filter((recipe) => recipe.id !== id));
   }
 
-  // Updating a recipe (UI and Server) expermental
+  // Updating a recipe (UI and Server)
   async function editRecipe(id) {
     setControlState({
       ...controlState,
       showRecipes: !controlState.showRecipes,
+      showAddForm: !controlState.showAddForm,
       showEdit: true,
       allowEdit: true,
     });
@@ -89,8 +99,6 @@ function App() {
       allowEdit: false,
     });
   }
-
-  // update ings --
 
   async function finishEdit(id, editedRecipe) {
     const res = await fetch(`http://localhost:5000/recipes/${id}`, {
@@ -105,6 +113,8 @@ function App() {
   // Rendering
   return (
     <div className="App">
+      <button onClick={toggleCalculate}>Calculate</button>
+      {controlState.showCalculate ? <Calculate /> : null}
       {controlState.showRecipes ? (
         <Recipes
           recipes={recipeState}
@@ -113,11 +123,8 @@ function App() {
           onEdit={editRecipe}
         />
       ) : null}
-      {controlState.showRecipes ? null : (
+      {controlState.showAddForm ? (
         <RecipeAddForm
-          // ings={ingsState}
-          // removeIngUI={removeIngHandlerUI}
-          // addIng={addIngHandler}
           toggleAddForm={toggleAddForm}
           onAdd={addRecipe}
           showEdit={controlState.showEdit}
@@ -125,11 +132,9 @@ function App() {
           disallowEdit={disallowEdit}
           finishEdit={finishEdit}
           idToEdit={idToEdit}
-          // updateIngs={updateIngs}
           recipeToEdit={recipeToEdit}
-          // recipeToEditIngs={recipeToEditIngs}
         />
-      )}
+      ) : null}
     </div>
   );
 }
