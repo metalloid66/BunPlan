@@ -1,14 +1,11 @@
 import React from "react";
-import AddBtn from "./AddBtn";
 import Recipe from "./Recipe";
+import AddBtn from "./AddBtn";
+import CalculateBtn from "./CalculateBtn";
 
 export default function Recipes(props) {
   return (
-    <div className="container">
-      <div className="title-and-add">
-        <h2>Recipes</h2>
-        <AddBtn toggleAddForm={props.toggleAddForm} />
-      </div>
+    <div className="container" id="style-9">
       {props.recipes.length === 0
         ? "Please Add recipes"
         : props.recipes.map((recipe, index) => {
@@ -24,6 +21,10 @@ export default function Recipes(props) {
               />
             );
           })}
+      <div className="add-calc-btns">
+        <AddBtn toggleAddForm={props.toggleAddForm} isAdd={props.isAdd} />
+        <CalculateBtn toggleCalculate={props.toggleCalculate} />
+      </div>
     </div>
   );
 }

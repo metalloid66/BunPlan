@@ -1,6 +1,7 @@
 import Recipes from "./components/Recipes";
 import RecipeAddForm from "./components/RecipeAddForm";
 import Calculate from "./components/Calculate";
+import Header from "./components/Header.jsx";
 
 // import SomeForm from "./components/SomeForm"
 import { useState, useEffect } from "react";
@@ -113,14 +114,16 @@ function App() {
   // Rendering
   return (
     <div className="App">
-      <button onClick={toggleCalculate}>Calculate</button>
+      {/* <Header/> */}
       {controlState.showCalculate ? <Calculate /> : null}
       {controlState.showRecipes ? (
         <Recipes
           recipes={recipeState}
-          toggleAddForm={toggleAddForm}
           onRemove={removeRecipe}
           onEdit={editRecipe}
+          toggleAddForm={toggleAddForm}
+          toggleCalculate={toggleCalculate}
+          isAdd={controlState.showRecipes}
         />
       ) : null}
       {controlState.showAddForm ? (

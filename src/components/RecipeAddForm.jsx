@@ -77,9 +77,6 @@ export default function RecipeAddForm(props) {
 
   return (
     <div className="add-form-container">
-      <button className="btn close-btn" onClick={props.toggleAddForm}>
-        CLOSE
-      </button>
       <form className="add-form" onSubmit={onSubmitFunc}>
         <input
           type="text"
