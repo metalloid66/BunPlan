@@ -49,20 +49,23 @@ body {
 }
 /* Recipes.jsx */
 .container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+.container-1 {
+  /* Container for Recipe */
   width: 35%;
   height: 100%;
   position: relative;
   overflow-y: scroll;
   overflow-x: hidden;
 }
-
-/* .title-and-add {
-  display: flex;
-  align-items: stretch;
-  flex-direction: row;
-  justify-content: space-evenly;
-} */
-
+.container-2 {
+  /* Container for RecipeDet*/
+  width: 65%;
+  margin: 2%;
+}
 /* Recipe.jsx */
 .recipe-container {
   padding-left: 10px;
@@ -77,9 +80,6 @@ body {
   background-color: #ffc567;
   cursor: pointer;
 }
-/* .recipe-btns {
-
-} */
 .recipe-title {
   cursor: pointer;
   line-height: 45px;
@@ -125,6 +125,18 @@ body {
   display: inline-block;
   width: 50%;
   font-size: 15px;
+}
+
+/* RecipeDet */
+.recipeDet-container {
+}
+.recipeDet-title {
+  margin-bottom: 2%;
+}
+.recipeDet-des {
+  margin-bottom: 2%;
+}
+.recipeDet-ings {
 }
 
 /* RecipeAddForm */
