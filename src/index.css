@@ -232,6 +232,53 @@ body {
   background-color: goldenrod;
   color: whitesmoke;
 }
+.recipesToCookTitle {
+  margin-bottom: 2%;
+}
+.recipesToCook {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.recipeToCook-container {
+  width: 15%;
+  margin-right: 5%;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  background-color: coral;
+  height: 16px;
+  padding: 1%;
+}
+.recipeToCook-title {
+  width: 85%;
+  color: whitesmoke;
+}
+.recipeToCook-remove {
+  border: none;
+  width: 15%;
+  border-radius: 100%;
+  color: whitesmoke;
+  background-color: #e74c3c;
+  transition: all 0.1s;
+}
+.recipeToCook-remove:hover {
+  /* background-color: #fc7667; */
+  cursor: pointer;
+  transform: scale(1.2);
+}
+.ingsToCookTitle {
+  margin-bottom: 1%;
+}
+.ingsToCook {
+  width: 84%;
+}
+.ingToCook-container {
+  width: 100%;
+  border: olive 1px solid;
+  padding: 3px;
+}
+
 .openCalc-btn:hover {
   background-color: rgb(245, 195, 68);
 }

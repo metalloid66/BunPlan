@@ -63,33 +63,35 @@ export default function Calculate(props) {
   }
   return (
     <div className="calculate-container">
+      <h2 className="recipesToCookTitle">Recipes to Cook</h2>
       <div className="recipesToCook">
-        <h2>Recipes to Cook</h2>
         {recipesToCook.length === 0
           ? "Please add recipes to cook"
           : recipesToCook.map((recipeToCook, index) => {
               return (
-                <div key={index}>
-                  <h4>{recipeToCook.title}</h4>{" "}
-                  {/* Just the title btw. not entire recipe*/}
-                  <button onClick={(e) => removeRecipeFromCook(e, index)}>
-                    -
+                <div key={index} className="recipeToCook-container">
+                  <h4 className="recipeToCook-title">{recipeToCook.title}</h4>
+                  <button
+                    className="recipeToCook-remove"
+                    onClick={(e) => removeRecipeFromCook(e, index)}
+                  >
+                    x
                   </button>
                 </div>
               );
             })}
       </div>
 
-      <div className="ingsToBuy">
-        <h2>Ingredients to buy </h2>
+      <h2 className="ingsToCookTitle">Ingredients to buy </h2>
+      <div className="ingsToCook">
         {finalIngs.length === 0
           ? "No ingredients to buy"
           : finalIngs.map((finalIng, index) => {
               return (
-                <div key={index}>
-                  <h3>{finalIng.ingTitle}</h3>
-                  <h3>{finalIng.amount}</h3>
-                  <h3>{finalIng.unit}</h3>
+                <div key={index} className="ingToCook-container">
+                  <p>
+                    {finalIng.ingTitle} {finalIng.amount} {finalIng.unit}
+                  </p>
                 </div>
               );
             })}

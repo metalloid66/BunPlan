@@ -25,6 +25,8 @@ export default function Recipe(props) {
         {props.recipeTitle}
       </h3>
 
+      {props.RECIPE}
+
       {props.isOpenCalc ? (
         <div
           className={

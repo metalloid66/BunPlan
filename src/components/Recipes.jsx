@@ -23,7 +23,7 @@ export default function Recipes(props) {
 
   // Adding Recipe From Form
   async function addRecipe(recipe) {
-    const res = await fetch("http://localhost:5000/recipes", {
+    const res = await fetch("https://bunplanner.herokuapp.com/recipes", {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(recipe),
@@ -50,7 +50,7 @@ export default function Recipes(props) {
   }
 
   async function finishEdit(id, editedRecipe) {
-    const res = await fetch(`http://localhost:5000/recipes/${id}`, {
+    const res = await fetch(`https://bunplanner.herokuapp.com/recipes/${id}`, {
       method: "PUT",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(editedRecipe),
@@ -74,7 +74,7 @@ export default function Recipes(props) {
   }
   // Get ID to show recipe in Calculate
   async function getRecipe(id) {
-    let recipe = await fetch(`http://localhost:5000/recipes/${id}`);
+    let recipe = await fetch(`https://bunplanner.herokuapp.com/recipes/${id}`);
     let data = await recipe.json();
     setRecipeToShop(data);
   }
