@@ -12,7 +12,7 @@ export default function RecipeAddForm(props) {
     if (props.allowEdit) {
       async function decfunction() {
         let toEditRecipe = await fetch(
-          `https://bunplanner.herokuapp.com/recipes/${props.idToEdit}`
+          `${window.location.hostname}:${port}/recipes/${props.idToEdit}`
         );
         let toEditRecipeData = await toEditRecipe.json();
         setRecipeName(toEditRecipeData.title);
