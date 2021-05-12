@@ -1,13 +1,11 @@
 import React from "react";
 import { useState } from "react";
 export default function Recipe(props) {
-  // Toggle Recipe Details
-
-  let [controlClasses, setControlClasses] = useState({ hovered: false });
+  const [isHovered, setIsHovered] = useState(false);
 
   function toggleRecipeBtns(e) {
     e.preventDefault();
-    setControlClasses({ ...controlClasses, hovered: !controlClasses.hovered });
+    setIsHovered(!isHovered);
   }
   function setDets() {
     props.toggleRecDet();
@@ -26,23 +24,40 @@ export default function Recipe(props) {
       <h3 onClick={setDets} className="recipe-title">
         {props.recipeTitle}
       </h3>
-      <div
-        className={controlClasses.hovered ? "edit-recipe-btn" : "hide"}
-        onClick={() => {
-          props.onEdit(props.recipeId);
-          // setRecDet((showRecDet = true));
-        }}
-      >
-        EDIT
-      </div>
-      <div
-        className={controlClasses.hovered ? "remove-recipe-btn" : "hide"}
-        onClick={() => {
-          props.onRemove(props.recipeId);
-        }}
-      >
-        REMOVE
-      </div>
+
+      {props.isOpenCalc ? (
+        <div
+          className={
+            !isHovered || !props.isOpenAdd ? "hide" : "edit-recipe-btn"
+          }
+          onClick={() => {
+            props.onEdit(props.recipeId);
+          }}
+        >
+          EDIT
+        </div>
+      ) : null}
+
+      {props.isOpenCalc ? (
+        <div
+          className={
+            !isHovered || !props.isOpenAdd ? "hide" : "remove-recipe-btn"
+          }
+          onClick={() => {
+            props.onRemove(props.recipeId);
+          }}
+        >
+          REMOVE
+        </div>
+      ) : null}
+      {!props.isOpenCalc ? (
+        <div
+          className={!isHovered ? "hide" : "openCalc-btn"}
+          onClick={() => props.getRecipe(props.recipeId)}
+        >
+          Add To List
+        </div>
+      ) : null}
     </div>
   );
 }

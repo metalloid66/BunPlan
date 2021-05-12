@@ -4,9 +4,9 @@ export default function AddBtn(props) {
   return (
     <button
       onClick={props.toggleAddForm}
-      className={props.isAdd ? "btn add-btn" : "btn close-btn"}
+      className={props.isOpenAdd ? "btn add-btn" : "btn close-btn"}
     >
-      ADD
+      {props.isOpenAdd ? "ADD" : "CLOSE ADD"}
     </button>
   );
 }

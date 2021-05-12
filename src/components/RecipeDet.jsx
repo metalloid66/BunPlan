@@ -1,6 +1,5 @@
 import { React } from "react";
 export default function RecipeDet(props) {
-  console.log("called");
   return (
     <div className="recipeDet-container">
       <h2 className="recipeDet-title">How to cook {props.recipeTitle}?</h2>

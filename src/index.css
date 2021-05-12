@@ -26,6 +26,7 @@ body {
 }
 .close-btn {
   background-color: #ba000d;
+  width: 100% !important;
 }
 .close-btn:hover {
   background-color: #f03a1a;
@@ -57,7 +58,6 @@ body {
   /* Container for Recipe */
   width: 35%;
   height: 100%;
-  position: relative;
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -65,6 +65,20 @@ body {
   /* Container for RecipeDet*/
   width: 65%;
   margin: 2%;
+  overflow-y: auto;
+}
+.container-3 {
+  /* Container for RecipeAddForm*/
+  width: 65%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.container-4 {
+  /* Container for Calculate*/
+  width: 65%;
+  margin: 2%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 /* Recipe.jsx */
 .recipe-container {
@@ -75,6 +89,7 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: auto;
+  /* border-bottom: 1px solid rgb(255, 255, 184); */
 }
 .recipe-container:hover {
   background-color: #ffc567;
@@ -140,38 +155,86 @@ body {
 }
 
 /* RecipeAddForm */
-.add-form-container {
-  width: 50%;
-  height: 50%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -30%);
+.addForm-container {
+  margin: 2%;
 }
 .add-form {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  height: 90%;
+  padding-bottom: 10px;
 }
-.add-form input,
-textarea {
-  border: honeydew solid 5px;
+.rec-descriptor-text {
+  margin-bottom: 8px;
 }
-textarea {
-  height: 25%;
+.title-input {
+  height: 30px;
+  margin-bottom: 25px;
+  border: #e7803c29 solid 3px;
+}
+.description-input {
+  height: 200px;
+  margin-bottom: 25px;
+  border: #e7803c29 solid 3px;
+  resize: none;
+}
+
+.recipe-ing {
+  display: flex;
+  margin-bottom: 10px;
+}
+.recipe-ing input {
+  display: inline-block;
+  border: #e7803c29 solid 3px;
+  width: 25%;
+  height: 20px;
+  margin-right: 5%;
+}
+.recipe-ing h5 {
+  width: 2%;
+  margin-right: 2%;
+  line-height: 2;
+}
+.remove-ing {
+  background-color: #e74c3c;
+  border: none;
+  width: 6%;
+  color: whitesmoke;
+}
+.remove-ing:hover {
+  background-color: #fc7667;
+}
+.add-ing {
+  border: none;
+  background-color: #27ae60;
+  color: whitesmoke;
+  height: 30px;
+  width: 50%;
+}
+.add-ing:hover {
+  background-color: #41da81;
 }
 .submit-form-btn {
-  height: 10%;
   border: none;
-  background-color: rgb(146, 4, 4);
-  color: aliceblue;
+  background-color: rgb(231, 24, 24);
+  color: whitesmoke;
+  height: 30px;
+  width: 50%;
 }
-.add-form-ing {
-  display: flex;
-  justify-content: space-between;
+.submit-form-btn:hover {
+  background-color: rgb(255, 58, 58);
 }
+
 /* Calculate.jsx */
+.openCalc-btn {
+  grid-column: 2/4;
+  text-align: center;
+  line-height: 3;
+  background-color: goldenrod;
+  color: whitesmoke;
+}
+.openCalc-btn:hover {
+  background-color: rgb(245, 195, 68);
+}
 @keyframes slidein {
   0% {
     transform: translateX(100%);

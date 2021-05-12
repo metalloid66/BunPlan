@@ -1,27 +1,22 @@
 import { React, useState, useEffect } from "react";
 
-export default function Calculate() {
-  let [allRecipes, setAllRecipes] = useState([]);
+export default function Calculate(props) {
+  // let [allRecipes, setAllRecipes] = useState([]);
   let [recipesToCook, setRecipesToCook] = useState([]);
   let [ingsToBuy, setIngsToBuy] = useState([]);
   let [finalIngs, setFinalIngs] = useState([]);
+  // Get Recipe to shop
   useEffect(() => {
-    const getRecipes = async () => {
-      const recipesFromServer = await fetchRecipes();
-      setAllRecipes(recipesFromServer);
-    };
-    getRecipes();
-  }, []); // might cause problems in edit
+    if (props.recipeToShop.title) {
+      setRecipesToCook(recipesToCook.concat([props.recipeToShop]));
+      console.log(recipesToCook);
+    }
+  }, [props.recipeToShop]);
 
-  // Add recipe To Cook
-  function addRecipeToCook(e, recipe) {
-    e.preventDefault();
-    setRecipesToCook([...recipesToCook, recipe]);
-    // ingsToBuyUpdater(recipe.ingredients);
-  }
   useEffect(() => {
     ingsToBuyUpdater(recipesToCook);
   }, [recipesToCook]);
+
   useEffect(() => {
     calcFinal();
   }, [ingsToBuy]);
@@ -30,7 +25,6 @@ export default function Calculate() {
   function removeRecipeFromCook(e, index) {
     e.preventDefault();
     setRecipesToCook(recipesToCook.filter((_, i) => i !== index));
-    // ingsToBuyUpdater(recipesToCook);
   }
 
   // Ingridents to buy
@@ -39,7 +33,6 @@ export default function Calculate() {
     recipes.forEach((recipe) => {
       ingsOfRecipes.push(recipe.ingredients);
     });
-    // setIngsToBuy([...ingsToBuy, ingsOfRecipes]);
     setIngsToBuy(ingsOfRecipes);
   }
   function calcFinal() {
@@ -68,28 +61,8 @@ export default function Calculate() {
     }
     setFinalIngs(finalResult);
   }
-
-  // Fetch reipes from backend with titles
-  async function fetchRecipes() {
-    const res = await fetch("http://localhost:5000/recipes"); // replace with any backend
-    const data = await res.json();
-    return data;
-  }
   return (
     <div className="calculate-container">
-      <div className="allRecipes">
-        <h2>All Recipes</h2>
-        {allRecipes.length === 0
-          ? "No recipes yet"
-          : allRecipes.map((recipe, index) => {
-              return (
-                <h4 key={index} onClick={(e) => addRecipeToCook(e, recipe)}>
-                  {recipe.title}
-                </h4>
-              );
-            })}
-      </div>
-
       <div className="recipesToCook">
         <h2>Recipes to Cook</h2>
         {recipesToCook.length === 0

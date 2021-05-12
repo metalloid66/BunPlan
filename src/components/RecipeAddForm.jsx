@@ -18,7 +18,6 @@ export default function RecipeAddForm(props) {
         setRecipeName(toEditRecipeData.title);
         setRecipeDes(toEditRecipeData.description);
         setRecipeIngs(toEditRecipeData.ingredients);
-        console.log(recipeIngs);
       }
       decfunction();
       props.disallowEdit();
@@ -28,7 +27,6 @@ export default function RecipeAddForm(props) {
   function onSubmitFunc(e) {
     e.preventDefault();
     if (!props.showEdit) {
-      console.log(recipeIngs);
       props.onAdd({
         title: recipeName,
         description: recipeDes,
@@ -76,51 +74,72 @@ export default function RecipeAddForm(props) {
   };
 
   return (
-    <div className="add-form-container">
+    <div className="addForm-container">
       <form className="add-form" onSubmit={onSubmitFunc}>
+        <label className="rec-descriptor-text">Recipe Name</label>
         <input
+          className="title-input"
           type="text"
-          placeholder="Recipe Name"
+          placeholder="e.g Pizza"
           value={recipeName}
           onChange={(e) => setRecipeName(e.target.value)}
           required
         />
+        <label className="rec-descriptor-text">Recipe Description</label>
         <textarea
-          placeholder="Recipe Description"
+          className="description-input"
+          placeholder="e.g Put the pizza in oven..."
           value={recipeDes}
           onChange={(e) => setRecipeDes(e.target.value)}
           required
         />
-        {recipeIngs.map((ing, index) => {
-          return (
-            <div className="add-form-ing" key={`ing-${index}`}>
-              <input
-                placeholder="Ing name"
-                name="ingTitle"
-                type="text"
-                onChange={(e) => onChangeIngs(e, index)}
-                value={ing.ingTitle}
-              />
-              <input
-                placeholder="Amount"
-                name="amount"
-                type="number"
-                onChange={(e) => onChangeIngs(e, index)}
-                value={ing.amount}
-              />
-              <input
-                placeholder="Unit"
-                name="unit"
-                type="text"
-                onChange={(e) => onChangeIngs(e, index)}
-                value={ing.unit}
-              />
-              <button onClick={(e) => handleRemoveIng(e, index)}>X</button>
-            </div>
-          );
-        })}
-        <button onClick={handleAddIng}>+</button>
-        <input type="submit" value="Save Recipe" className="submit-form-btn" />
+        <label className="rec-descriptor-text">Recipe Ingredients</label>
+        <div className="recipe-ings">
+          {recipeIngs.map((ing, index) => {
+            return (
+              <div className="recipe-ing" key={`ing-${index}`}>
+                <h5>#{index + 1}</h5>
+                <input
+                  placeholder="Ing name"
+                  name="ingTitle"
+                  type="text"
+                  onChange={(e) => onChangeIngs(e, index)}
+                  value={ing.ingTitle}
+                />
+                <input
+                  placeholder="Amount"
+                  name="amount"
+                  type="number"
+                  onChange={(e) => onChangeIngs(e, index)}
+                  value={ing.amount}
+                />
+                <input
+                  placeholder="Unit"
+                  name="unit"
+                  type="text"
+                  onChange={(e) => onChangeIngs(e, index)}
+                  value={ing.unit}
+                />
+                <button
+                  onClick={(e) => handleRemoveIng(e, index)}
+                  className="remove-ing"
+                >
+                  X
+                </button>
+              </div>
+            );
+          })}
+        </div>
+        <div>
+          <button onClick={handleAddIng} className="add-ing">
+            Add Ingredient
+          </button>
+          <input
+            type="submit"
+            value="Save Recipe"
+            className="submit-form-btn"
+          />
+        </div>
       </form>
     </div>
   );

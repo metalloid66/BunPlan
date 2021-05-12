@@ -2,8 +2,11 @@ import React from "react";
 
 export default function CalculateBtn(props) {
   return (
-    <button className="btn calculate-btn" onClick={props.toggleCalculate}>
-      SHOP
+    <button
+      className={!props.isOpenCalc ? "btn close-btn" : "btn calculate-btn"}
+      onClick={props.toggleCalculate}
+    >
+      {!props.isOpenCalc ? "CLOSE SHOP" : "SHOP"}
     </button>
   );
 }
