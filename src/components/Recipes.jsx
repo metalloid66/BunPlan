@@ -24,11 +24,14 @@ export default function Recipes(props) {
 
   // Adding Recipe From Form
   async function addRecipe(recipe) {
-    const res = await fetch(`${window.location.hostname}:${port}/recipes`, {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(recipe),
-    });
+    const res = await fetch(
+      `https://bunplanner.herokuapp.com:${port}/recipes`,
+      {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(recipe),
+      }
+    );
     const data = await res.json();
     props.onUpdate(data);
   }
@@ -52,7 +55,7 @@ export default function Recipes(props) {
 
   async function finishEdit(id, editedRecipe) {
     const res = await fetch(
-      `${window.location.hostname}:${port}/recipes/${id}`,
+      `https://bunplanner.herokuapp.com:${port}/recipes/${id}`,
       {
         method: "PUT",
         headers: { "Content-type": "application/json" },
@@ -79,7 +82,7 @@ export default function Recipes(props) {
   // Get ID to show recipe in Calculate
   async function getRecipe(id) {
     let recipe = await fetch(
-      `${window.location.hostname}:${port}/recipes/${id}`
+      `https://bunplanner.herokuapp.com:${port}/recipes/${id}`
     );
     let data = await recipe.json();
     setRecipeToShop(data);

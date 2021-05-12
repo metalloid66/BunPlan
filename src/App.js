@@ -15,7 +15,7 @@ function App() {
   // Fetch reipes from backend - GET
   async function fetchRecipes() {
     // const res = await fetch("http://localhost:5000/recipes"); // replace with any backend
-    const res = await fetch(`${window.location.hostname}:${port}/recipes`); // replace with any backend
+    const res = await fetch(`https://bunplanner.herokuapp.com:${port}/recipes`); // replace with any backend
     const data = await res.json();
     return data;
   }
@@ -26,7 +26,7 @@ function App() {
 
   // Deleting a recipe (UI and Server) - DELETE
   async function removeRecipe(id) {
-    await fetch(`${window.location.hostname}:${port}/recipes/${id}`, {
+    await fetch(`https://bunplanner.herokuapp.com:${port}/recipes/${id}`, {
       method: "DELETE",
     });
 
