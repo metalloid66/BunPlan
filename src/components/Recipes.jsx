@@ -1,77 +1,75 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import Recipe from "./Recipe";
 import RecipeDet from "./RecipeDet";
-import AddBtn from "./AddBtn";
 import CalculateBtn from "./CalculateBtn";
-import RecipeAddForm from "./RecipeAddForm";
 import Calculate from "./Calculate";
+import AddBtn from "./AddBtn";
+import RecipeAddForm from "./RecipeAddForm";
 
 export default function Recipes(props) {
   const port = process.env.PORT || 5000;
-  /* States & functions for RecipeAddForm */
+
+  /* States & handler functions for RecipeAddForm */
   const [showAddForm, setShowAddForm] = useState(false);
   const [isOpenAdd, setIsOpenAdd] = useState(true);
   const [hideAdd, setHideAdd] = useState(false);
 
   // Toggle form recipes
-  function toggleAddForm() {
+  function toggleAddForm(finishSubmit) {
+    setAllowEdit(false);
     setShowAddForm(!showAddForm);
     setIsOpenAdd(!isOpenAdd);
-    setRecipeToEdit({});
     setShowEdit(false);
     setHideCalc(!hideCalc);
   }
 
   // Adding Recipe From Form
   async function addRecipe(recipe) {
-    const res = await fetch(
-      `https://bunplanner.herokuapp.com:${port}/recipes`,
-      {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify(recipe),
-      }
-    );
+    const res = await fetch(`http://localhost:5000/recipes`, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(recipe),
+    });
     const data = await res.json();
     props.onUpdate(data);
   }
 
-  /* States & functions for Edit */
+  /* States & handler functions for Edit */
   const [showEdit, setShowEdit] = useState(false);
   const [allowEdit, setAllowEdit] = useState(false);
-  const [recipeToEdit, setRecipeToEdit] = useState({});
+  // const [recipeToEdit, setRecipeToEdit] = useState({});
   const [idToEdit, setIdToEdit] = useState({});
 
-  // Editting A Recipe
+  // Toggle A Recipe to edit
   async function editRecipe(id) {
     setShowAddForm(!showAddForm);
     setShowEdit(true);
     setAllowEdit(true);
     setIdToEdit(id);
   }
+
+  // Stop infinite edits loop
   function disallowEdit() {
     setAllowEdit(false);
   }
 
+  // Finalize Edit and PUT
   async function finishEdit(id, editedRecipe) {
-    const res = await fetch(
-      `https://bunplanner.herokuapp.com:${port}/recipes/${id}`,
-      {
-        method: "PUT",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify(editedRecipe),
-      }
-    );
-
+    const res = await fetch(`http://localhost:5000/recipes/${id}`, {
+      method: "PUT",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(editedRecipe),
+    });
     const data = await res.json();
     props.onUpdate(data);
   }
 
-  /* States & functions for Calculate */
+  /* States & handler functions for Calculate */
   const [showCalculate, setShowCalculate] = useState(false);
   const [isOpenCalc, setIsOpenCalc] = useState(true);
   const [hideCalc, setHideCalc] = useState(false);
   const [recipeToShop, setRecipeToShop] = useState({});
+
   // Toggle Calculate
   function toggleCalculate(e) {
     e.preventDefault();
@@ -79,16 +77,15 @@ export default function Recipes(props) {
     setIsOpenCalc(!isOpenCalc);
     setHideAdd(!hideAdd);
   }
-  // Get ID to show recipe in Calculate
+
+  // Get Recipes's ID to shop in Calculate list
   async function getRecipe(id) {
-    let recipe = await fetch(
-      `https://bunplanner.herokuapp.com:${port}/recipes/${id}`
-    );
+    let recipe = await fetch(`http://localhost:5000/recipes/${id}`);
     let data = await recipe.json();
     setRecipeToShop(data);
   }
 
-  /* States & functions for RecipeDet */
+  /* States & handler functions for RecipeDet */
   let [showRecDet, setRecDet] = useState(false);
   let [recipeTitle, setRecipeTitle] = useState("");
   let [recipeDescription, setRecipeDescription] = useState("");
@@ -163,7 +160,7 @@ export default function Recipes(props) {
             disallowEdit={disallowEdit}
             finishEdit={finishEdit}
             idToEdit={idToEdit}
-            recipeToEdit={recipeToEdit}
+            // recipeToEdit={recipeToEdit}
           />
         </div>
       ) : null}

@@ -7,13 +7,12 @@ export default function RecipeAddForm(props) {
   let [recipeDes, setRecipeDes] = useState("");
   let [recipeIngs, setRecipeIngs] = useState([]);
 
-  // handling the edit
-
+  // Handling a recipe edit
   useEffect(() => {
     if (props.allowEdit) {
       async function decfunction() {
         let toEditRecipe = await fetch(
-          `https://bunplanner.herokuapp.com:${port}/recipes/${props.idToEdit}`
+          `http://localhost:5000/recipes/${props.idToEdit}`
         );
         let toEditRecipeData = await toEditRecipe.json();
         setRecipeName(toEditRecipeData.title);
@@ -24,7 +23,8 @@ export default function RecipeAddForm(props) {
       props.disallowEdit();
     }
   });
-  // Submit the form
+
+  // Submitting the form
   function onSubmitFunc(e) {
     e.preventDefault();
     if (!props.showEdit) {
@@ -42,9 +42,11 @@ export default function RecipeAddForm(props) {
       });
       alert("You have Edited a recipe");
     }
-    props.toggleAddForm();
+    const finishedSubmit = true;
+    props.toggleAddForm(finishedSubmit);
   }
 
+  // Handling adding an ingredient
   function handleAddIng(e) {
     e.preventDefault();
     const ing = {
@@ -54,6 +56,7 @@ export default function RecipeAddForm(props) {
     };
     setRecipeIngs((prev) => [...prev, ing]);
   }
+  // Handling changes in ingredient fields
   function onChangeIngs(event, index) {
     event.preventDefault();
     event.persist();
@@ -69,6 +72,7 @@ export default function RecipeAddForm(props) {
       });
     });
   }
+  // Removing an ingredient
   const handleRemoveIng = (e, index) => {
     e.preventDefault();
     setRecipeIngs((prev) => prev.filter((item) => item !== prev[index]));
