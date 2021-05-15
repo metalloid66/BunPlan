@@ -137,11 +137,11 @@ export default function RecipeAddForm(props) {
         </div>
         <div>
           <button onClick={handleAddIng} className="add-ing">
-            Add Ingredient
+            ADD INGREDIENT
           </button>
           <input
             type="submit"
-            value="Save Recipe"
+            value="SAVE RECIPE"
             className="submit-form-btn"
           />
         </div>

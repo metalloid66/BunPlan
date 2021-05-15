@@ -21,6 +21,8 @@ export default function Recipes(props) {
     setIsOpenAdd(!isOpenAdd);
     setShowEdit(false);
     setHideCalc(!hideCalc);
+    // Temp solution for showing close btn after submitting edit
+    // setIsOpenAdd(finishSubmit);
   }
 
   // Adding Recipe From Form
