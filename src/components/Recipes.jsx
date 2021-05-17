@@ -18,9 +18,17 @@ export default function Recipes(props) {
   function toggleAddForm(finishSubmit) {
     setAllowEdit(false);
     setShowAddForm(!showAddForm);
-    setIsOpenAdd(!isOpenAdd);
     setShowEdit(false);
-    setHideCalc(!hideCalc);
+    // temp submit from edit solution
+    if (finishSubmit === true) {
+      setIsOpenAdd(true);
+      setHideCalc(false);
+      setIsOpenEdit(false);
+    } else {
+      setIsOpenAdd(!isOpenAdd);
+      setHideCalc(!hideCalc);
+      setIsOpenEdit(!isOpenEdit);
+    }
   }
 
   // Adding Recipe From Form
@@ -37,8 +45,9 @@ export default function Recipes(props) {
   /* States & handler functions for Edit */
   const [showEdit, setShowEdit] = useState(false);
   const [allowEdit, setAllowEdit] = useState(false);
-  // const [recipeToEdit, setRecipeToEdit] = useState({});
   const [idToEdit, setIdToEdit] = useState({});
+  //experimental
+  const [isOpenEdit, setIsOpenEdit] = useState(false);
 
   // Toggle A Recipe to edit
   async function editRecipe(id) {
@@ -46,6 +55,10 @@ export default function Recipes(props) {
     setShowEdit(true);
     setAllowEdit(true);
     setIdToEdit(id);
+    //experimental
+    setIsOpenEdit(!isOpenEdit);
+    setIsOpenAdd(!isOpenAdd);
+    setHideCalc(!hideCalc);
   }
 
   // Stop infinite edits loop
@@ -110,6 +123,7 @@ export default function Recipes(props) {
                 <Recipe
                   isOpenAdd={isOpenAdd}
                   isOpenCalc={isOpenCalc}
+                  isOpenEdit={isOpenEdit}
                   getRecipe={getRecipe}
                   toggleRecDet={toggleRecDet}
                   updateRecipeDet={updateRecipeDet}
@@ -160,7 +174,6 @@ export default function Recipes(props) {
             disallowEdit={disallowEdit}
             finishEdit={finishEdit}
             idToEdit={idToEdit}
-            // recipeToEdit={recipeToEdit}
           />
         </div>
       ) : null}

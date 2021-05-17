@@ -24,42 +24,44 @@ export default function Recipe(props) {
       <h3 onClick={setDets} className="recipe-title">
         {props.recipeTitle}
       </h3>
+      {/* extra div to seperate between edit and (add/calc) forms*/}
 
-      {props.RECIPE}
-
-      {props.isOpenCalc ? (
-        <div
-          className={
-            !isHovered || !props.isOpenAdd ? "hide" : "edit-recipe-btn"
-          }
-          onClick={() => {
-            props.onEdit(props.recipeId);
-          }}
-        >
-          EDIT
-        </div>
-      ) : null}
-
-      {props.isOpenCalc ? (
-        <div
-          className={
-            !isHovered || !props.isOpenAdd ? "hide" : "remove-recipe-btn"
-          }
-          onClick={() => {
-            props.onRemove(props.recipeId);
-          }}
-        >
-          REMOVE
-        </div>
-      ) : null}
-      {!props.isOpenCalc ? (
-        <div
-          className={!isHovered ? "hide" : "openCalc-btn"}
-          onClick={() => props.getRecipe(props.recipeId)}
-        >
-          Add To List
-        </div>
-      ) : null}
+      {props.isOpenEdit ? null : ( // if form is taken by edit, hide recipe btns
+        <>
+          {props.isOpenCalc ? ( // isOpenCalc === false ?
+            <div
+              className={
+                !isHovered || !props.isOpenAdd ? "hide" : "edit-recipe-btn"
+              }
+              onClick={() => {
+                props.onEdit(props.recipeId);
+              }}
+            >
+              EDIT
+            </div>
+          ) : null}
+          {props.isOpenCalc ? ( // isOpenCalc === false ?
+            <div
+              className={
+                !isHovered || !props.isOpenAdd ? "hide" : "remove-recipe-btn"
+              }
+              onClick={() => {
+                props.onRemove(props.recipeId);
+              }}
+            >
+              REMOVE
+            </div>
+          ) : null}
+          {!props.isOpenCalc ? ( // isOpenCalc === true?
+            <div
+              className={!isHovered ? "hide" : "openCalc-btn"}
+              onClick={() => props.getRecipe(props.recipeId)}
+            >
+              Add To List
+            </div>
+          ) : null}
+        </>
+      )}
     </div>
   );
 }
