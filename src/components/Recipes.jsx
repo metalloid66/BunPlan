@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState } from "react";
 import Recipe from "./Recipe";
 import RecipeDet from "./RecipeDet";
 import CalculateBtn from "./CalculateBtn";
@@ -33,7 +33,7 @@ export default function Recipes(props) {
 
   // Adding Recipe From Form
   async function addRecipe(recipe) {
-    const res = await fetch(`http://localhost:5000/recipes`, {
+    const res = await fetch(`add-recipe`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(recipe),
@@ -68,7 +68,7 @@ export default function Recipes(props) {
 
   // Finalize Edit and PUT
   async function finishEdit(id, editedRecipe) {
-    const res = await fetch(`http://localhost:5000/recipes/${id}`, {
+    const res = await fetch(id, {
       method: "PUT",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(editedRecipe),
@@ -93,7 +93,7 @@ export default function Recipes(props) {
 
   // Get Recipes's ID to shop in Calculate list
   async function getRecipe(id) {
-    let recipe = await fetch(`http://localhost:5000/recipes/${id}`);
+    let recipe = await fetch(id);
     let data = await recipe.json();
     setRecipeToShop(data);
   }
@@ -133,7 +133,8 @@ export default function Recipes(props) {
                   recipeTitle={recipe.title}
                   recipeDescription={recipe.description}
                   recipeIngredients={recipe.ingredients}
-                  recipeId={recipe.id}
+                  // recipeId={recipe.id}
+                  recipeId={recipe._id}
                 />
               );
             })}

@@ -33,7 +33,14 @@ export default function Recipe(props) {
               className={
                 !isHovered || !props.isOpenAdd ? "hide" : "edit-recipe-btn"
               }
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
+                window.history.replaceState(
+                  //change the url without reloading
+                  null,
+                  null,
+                  `/recipes/${props.recipeId}`
+                );
                 props.onEdit(props.recipeId);
               }}
             >
@@ -55,7 +62,15 @@ export default function Recipe(props) {
           {!props.isOpenCalc ? ( // isOpenCalc === true?
             <div
               className={!isHovered ? "hide" : "openCalc-btn"}
-              onClick={() => props.getRecipe(props.recipeId)}
+              onClick={() => {
+                props.getRecipe(props.recipeId);
+                window.history.replaceState(
+                  //change the url without reloading
+                  null,
+                  null,
+                  `/recipes/${props.recipeId}`
+                );
+              }}
             >
               Add To List
             </div>

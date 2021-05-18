@@ -1,8 +1,8 @@
 import Recipes from "./components/Recipes";
 import { useState, useEffect } from "react";
 function App() {
-  // Experimental -- Adding express
-  const port = process.env.PORT || 5000; // For server deployment
+  const [data, setData] = useState(null);
+
   let [recipeState, setRecipeState] = useState([]);
   // On page load
   useEffect(() => {
@@ -11,13 +11,12 @@ function App() {
       setRecipeState(recipesFromServer);
     };
     getRecipes();
-    console.log("called");
-  }, []);
+    console.log(recipeState);
+  }, []); // not sure of how dangerous...
 
   // Fetch reipes from backend - GET
   async function fetchRecipes() {
-    const res = await fetch("http://localhost:5000/recipes"); // replace with any backend
-    // const res = await fetch(`https://bunplanner.herokuapp.com:${port}/recipes`);
+    const res = await fetch("recipes"); // gotten from backend
     const data = await res.json();
     return data;
   }
@@ -34,11 +33,16 @@ function App() {
 
   // Deleting a recipe (UI and Server) - DELETE
   async function removeRecipe(id) {
-    await fetch(`http://localhost:5000/recipes/${id}`, {
+    await fetch(`/recipes/${id}`, {
       method: "DELETE",
     });
-
     setRecipeState(recipeState.filter((recipe) => recipe.id !== id));
+    const getRecipes = async () => {
+      // redundant but will do for now
+      const recipesFromServer = await fetchRecipes();
+      setRecipeState(recipesFromServer);
+    };
+    getRecipes();
   }
 
   // Rendering
