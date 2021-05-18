@@ -1,4 +1,5 @@
 import express from "express";
+import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import mongoose from "mongoose";
@@ -9,8 +10,7 @@ import { dbURI } from "./config.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const app = express();
-// const port = process.env.PORT || 5000; // For server deployment
-const port = 3001;
+const port = process.env.PORT || 3001; // For server deployment
 
 // Mongoose Database setup
 mongoose
@@ -21,6 +21,7 @@ mongoose
 // Accepting form data
 app.use(bodyParser.json()); //change with something else
 app.use(express.static("public"));
+app.use(express.static(path.resolve(__dirname, "../Client/build")));
 app.use(express.urlencoded({ extended: true }));
 
 /* Route handling */
@@ -87,6 +88,12 @@ app.delete("/recipes/:id", (req, res) => {
     .catch((err) => {
       console.log(err);
     });
+});
+
+// Redirect all unhandled get requests to /recipes
+app.get("*", (req, res) => {
+  // res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+  res.redirect("/recipes");
 });
 
 // Port listening
