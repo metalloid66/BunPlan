@@ -5,13 +5,13 @@ import { dirname } from "path";
 import mongoose from "mongoose";
 import { Recipe } from "./models/recipe.js";
 import bodyParser from "body-parser";
-// import { dbURI } from "./config.js";
-let dbURI = process.env.dbURI; // for production
-// let dbURI = process.env.dbURI
-//   ? process.env.dbURI
-//   : import("./config.js").then((exports) => {
-//       dbURI = exports.dbURI;
-//     });
+import { dbURI } from "./config.js";
+// let dbURI = process.env.dbURI; // for production
+// // let dbURI = process.env.dbURI
+// //   ? process.env.dbURI
+// //   : import("./config.js").then((exports) => {
+// //       dbURI = exports.dbURI;
+// //     });
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

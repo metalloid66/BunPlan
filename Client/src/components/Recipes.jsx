@@ -19,6 +19,8 @@ export default function Recipes(props) {
     setAllowEdit(false);
     setShowAddForm(!showAddForm);
     setShowEdit(false);
+    setRecDet(false);
+    setShowCalculate(false);
     // temp submit from edit solution
     if (finishSubmit === true) {
       setIsOpenAdd(true);
@@ -33,7 +35,7 @@ export default function Recipes(props) {
 
   // Adding Recipe From Form
   async function addRecipe(recipe) {
-    const res = await fetch(`add-recipe`, {
+    const res = await fetch(`https://bunplanner.herokuapp.com/add-recipe`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(recipe),
@@ -52,6 +54,7 @@ export default function Recipes(props) {
   // Toggle A Recipe to edit
   async function editRecipe(id) {
     setShowAddForm(!showAddForm);
+    setRecDet(false);
     setShowEdit(true);
     setAllowEdit(true);
     setIdToEdit(id);
@@ -68,7 +71,7 @@ export default function Recipes(props) {
 
   // Finalize Edit and PUT
   async function finishEdit(id, editedRecipe) {
-    const res = await fetch(id, {
+    const res = await fetch(`https://bunplanner.herokuapp.com/recipes/${id}`, {
       method: "PUT",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(editedRecipe),
@@ -87,13 +90,17 @@ export default function Recipes(props) {
   function toggleCalculate(e) {
     e.preventDefault();
     setShowCalculate(!showCalculate);
+    setRecDet(false);
+    setShowAddForm(false);
+    setShowEdit(false);
     setIsOpenCalc(!isOpenCalc);
     setHideAdd(!hideAdd);
   }
 
   // Get Recipes's ID to shop in Calculate list
   async function getRecipe(id) {
-    let recipe = await fetch(id);
+    // let recipe = await fetch(id);
+    let recipe = await fetch(`https://bunplanner.herokuapp.com/recipes/${id}`);
     let data = await recipe.json();
     setRecipeToShop(data);
   }
@@ -105,6 +112,8 @@ export default function Recipes(props) {
   let [recipeIngredients, setRecipeIngredients] = useState("");
 
   function toggleRecDet() {
+    if (showAddForm === true || showEdit === true || showCalculate === true)
+      return;
     setRecDet(!showRecDet);
   }
   function updateRecipeDet(recTitle, recDes, recIngs) {
@@ -138,19 +147,18 @@ export default function Recipes(props) {
                 />
               );
             })}
-        <div className="add-calc-btns">
-          {hideAdd ? null : (
-            <AddBtn toggleAddForm={toggleAddForm} isOpenAdd={isOpenAdd} />
-          )}
-          {hideCalc ? null : (
-            <CalculateBtn
-              toggleCalculate={toggleCalculate}
-              isOpenCalc={isOpenCalc}
-            />
-          )}
-        </div>
       </div>
-
+      <div className="add-calc-btns">
+        {hideAdd ? null : (
+          <AddBtn toggleAddForm={toggleAddForm} isOpenAdd={isOpenAdd} />
+        )}
+        {hideCalc ? null : (
+          <CalculateBtn
+            toggleCalculate={toggleCalculate}
+            isOpenCalc={isOpenCalc}
+          />
+        )}
+      </div>
       {
         showRecDet ? (
           <div className="container-2" id="style-9">

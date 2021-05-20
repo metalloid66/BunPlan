@@ -6,6 +6,20 @@
   margin: 0;
   padding: 0;
 }
+
+html {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 20px, transparent 20px),
+    linear-gradient(0deg, transparent 50%, rgba(200, 0, 0, 0.5) 50%) 20px 20px,
+    linear-gradient(0deg, rgba(0, 0, 0, 0.5) 50%, transparent 50%) 40px 0,
+    linear-gradient(180deg, transparent 20px, rgba(0, 0, 0, 0.5) 20px) 40px 0,
+    floralwhite;
+  background-size: 40px 40px;
+  /* background: linear-gradient(90deg, burlywood 46%, transparent 50%),
+    linear-gradient(180deg, transparent 50%, burlywood 54%), bisque;
+
+  background-size: 20px 20px; */
+}
+
 body {
   font-family: "Open Sans", sans-serif;
 }
@@ -21,6 +35,7 @@ body {
 }
 .add-btn {
   background-color: #27ae60;
+  border-bottom-left-radius: 10px;
 }
 .add-btn:hover {
   background-color: #2dca6f;
@@ -28,6 +43,7 @@ body {
 .close-btn {
   background-color: #ba000d;
   width: 100% !important;
+  border-bottom-left-radius: 10px;
 }
 .close-btn:hover {
   background-color: #f03a1a;
@@ -47,58 +63,69 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border: #f1d8d4 solid 3px;
+  /* border: #f1d8d4 solid 3px; */
 }
 /* Recipes.jsx */
 .container {
   width: 100%;
   height: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: 36% 64%;
+  background-color: rgba(245, 245, 245, 0.98); /*whitesmoke*/
+  border-radius: 10px;
 }
 .container-1 {
   /* Container for Recipe */
-  width: 35%;
-  height: 100%;
+  width: 100%;
+  height: 94%;
   overflow-y: scroll;
   overflow-x: hidden;
 }
 .container-2 {
   /* Container for RecipeDet*/
-  width: 65%;
+  width: 95%;
   margin: 2%;
   overflow-y: auto;
 }
 .container-3 {
   /* Container for RecipeAddForm*/
-  width: 65%;
+  width: 95%;
   overflow-y: auto;
   overflow-x: hidden;
 }
 .container-4 {
   /* Container for Calculate*/
-  width: 65%;
+  width: 95%;
   margin: 2%;
   overflow-y: auto;
   overflow-x: hidden;
 }
 /* Recipe.jsx */
+.container-1:first-child {
+  /* border-radius: 10px 0px 0px 0px; */
+  border-top-left-radius: 10px;
+}
 .recipe-container {
-  padding-left: 10px;
+  /* padding-left: 10px; */
   background-color: #f39c12;
   transition: all 0.2s;
   font-weight: bold;
-  display: grid;
+  /* display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: auto;
+  grid-auto-rows: auto; */
+  display: flex;
 }
 .recipe-container:hover {
   background-color: #ffc567;
   cursor: pointer;
 }
 .recipe-title {
+  padding-left: 10px;
   cursor: pointer;
   line-height: 45px;
   color: whitesmoke;
+  font-size: 1.2rem;
+  width: 100%;
 }
 .edit-recipe-btn {
   display: inline-block;
@@ -108,6 +135,7 @@ body {
   animation-duration: 0.1s;
   color: whitesmoke;
   line-height: 45px;
+  width: 50%;
 }
 .edit-recipe-btn:hover {
   background-color: #3e99d5;
@@ -120,6 +148,7 @@ body {
   animation-duration: 0.1s;
   color: whitesmoke;
   line-height: 45px;
+  width: 50%;
 }
 .remove-recipe-btn:hover {
   background-color: #ed7669;
@@ -133,13 +162,16 @@ body {
   font-size: 15px;
 }
 .add-calc-btns {
-  width: 100%;
+  /* width: 100%; */
+  position: absolute;
+  bottom: 0;
+  width: 36%;
   color: whitesmoke;
 }
 .add-calc-btns > * {
   display: inline-block;
   width: 50%;
-  font-size: 15px;
+  font-size: 1rem;
 }
 
 /* RecipeDet */
@@ -229,11 +261,11 @@ body {
 
 /* Calculate.jsx */
 .openCalc-btn {
-  grid-column: 2/4;
   text-align: center;
   line-height: 3;
   background-color: goldenrod;
   color: whitesmoke;
+  width: 100%;
 }
 .recipesToCookTitle {
   margin-bottom: 2%;

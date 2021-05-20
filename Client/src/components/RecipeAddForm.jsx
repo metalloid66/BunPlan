@@ -11,7 +11,10 @@ export default function RecipeAddForm(props) {
   useEffect(() => {
     if (props.allowEdit) {
       async function decfunction() {
-        let toEditRecipe = await fetch(`${props.idToEdit}`);
+        // let toEditRecipe = await fetch(`${props.idToEdit}`);
+        let toEditRecipe = await fetch(
+          `https://bunplanner.herokuapp.com/recipes/${props.idToEdit}`
+        );
         let toEditRecipeData = await toEditRecipe.json();
         setRecipeName(toEditRecipeData.title);
         setRecipeDes(toEditRecipeData.description);

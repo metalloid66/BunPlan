@@ -5,8 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js --ignore client",
-    "build": "cd Client && npm install && npm run build"
+    "start": "nodemon index.js --ignore client"
   },
   "author": "",
   "license": "ISC",

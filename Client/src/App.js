@@ -16,7 +16,8 @@ function App() {
 
   // Fetch reipes from backend - GET
   async function fetchRecipes() {
-    const res = await fetch("recipes"); // gotten from backend
+    // const res = await fetch("recipes"); // gotten from backend
+    const res = await fetch("https://bunplanner.herokuapp.com/recipes");
     const data = await res.json();
     return data;
   }
@@ -33,7 +34,7 @@ function App() {
 
   // Deleting a recipe (UI and Server) - DELETE
   async function removeRecipe(id) {
-    await fetch(`/recipes/${id}`, {
+    await fetch(`https://bunplanner.herokuapp.com/recipes/${id}`, {
       method: "DELETE",
     });
     setRecipeState(recipeState.filter((recipe) => recipe.id !== id));

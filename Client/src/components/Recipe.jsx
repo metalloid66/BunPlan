@@ -21,10 +21,9 @@ export default function Recipe(props) {
       onMouseEnter={(e) => toggleRecipeBtns(e)}
       onMouseLeave={(e) => toggleRecipeBtns(e)}
     >
-      <h3 onClick={setDets} className="recipe-title">
+      <p onClick={setDets} className="recipe-title">
         {props.recipeTitle}
-      </h3>
-      {/* extra div to seperate between edit and (add/calc) forms*/}
+      </p>
 
       {props.isOpenEdit ? null : ( // if form is taken by edit, hide recipe btns
         <>
