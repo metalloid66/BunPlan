@@ -1,12 +1,12 @@
 import { React } from "react";
 export default function RecipeDet(props) {
   return (
-    <div className="recipeDet-container">
+    <div>
       <h2 className="recipeDet-title">How to cook {props.recipeTitle}?</h2>
       <div className="recipeDet-des">
         <p>{props.recipeDescription}</p>
       </div>
-      <div className="recipeDet-ings">
+      <div>
         <h4>You will need:</h4>
         {Object.entries(props.recipeIngredients).map((ing, index) => {
           return (

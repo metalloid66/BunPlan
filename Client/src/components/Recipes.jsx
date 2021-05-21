@@ -124,7 +124,7 @@ export default function Recipes(props) {
 
   return (
     <div className="container">
-      <div className="container-1" id="style-9">
+      <div className="container-left" id="style-9">
         {props.recipes.length === 0
           ? "Please Add recipes"
           : props.recipes.map((recipe, index) => {
@@ -142,7 +142,6 @@ export default function Recipes(props) {
                   recipeTitle={recipe.title}
                   recipeDescription={recipe.description}
                   recipeIngredients={recipe.ingredients}
-                  // recipeId={recipe.id}
                   recipeId={recipe._id}
                 />
               );
@@ -161,7 +160,7 @@ export default function Recipes(props) {
       </div>
       {
         showRecDet ? (
-          <div className="container-2" id="style-9">
+          <div className="container-rest" id="style-9">
             <RecipeDet
               recipeTitle={recipeTitle}
               recipeDescription={recipeDescription}
@@ -174,7 +173,7 @@ export default function Recipes(props) {
       }
 
       {showAddForm ? (
-        <div className="container-3" id="style-9">
+        <div className="container-rest" id="style-9">
           <RecipeAddForm
             toggleAddForm={toggleAddForm}
             onAdd={addRecipe}
@@ -187,7 +186,7 @@ export default function Recipes(props) {
         </div>
       ) : null}
       {showCalculate ? (
-        <div className="container-4" id="style-9">
+        <div className="container-rest" id="style-9">
           <Calculate recipeToShop={recipeToShop} />
         </div>
       ) : null}

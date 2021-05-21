@@ -5,6 +5,10 @@
 * {
   margin: 0;
   padding: 0;
+  border: none;
+}
+button {
+  cursor: pointer;
 }
 
 html {
@@ -14,10 +18,6 @@ html {
     linear-gradient(180deg, transparent 20px, rgba(0, 0, 0, 0.5) 20px) 40px 0,
     floralwhite;
   background-size: 40px 40px;
-  /* background: linear-gradient(90deg, burlywood 46%, transparent 50%),
-    linear-gradient(180deg, transparent 50%, burlywood 54%), bisque;
-
-  background-size: 20px 20px; */
 }
 
 body {
@@ -26,11 +26,9 @@ body {
 /* Buttons */
 .btn {
   padding: 10px;
-  border: none;
   font-size: 10px;
   color: #fff;
   transition: background-color 0.2s;
-  cursor: pointer;
   display: inline-block;
 }
 .add-btn {
@@ -63,7 +61,6 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* border: #f1d8d4 solid 3px; */
 }
 /* Recipes.jsx */
 .container {
@@ -74,45 +71,28 @@ body {
   background-color: rgba(245, 245, 245, 0.98); /*whitesmoke*/
   border-radius: 10px;
 }
-.container-1 {
+.container-left {
   /* Container for Recipe */
   width: 100%;
   height: 94%;
   overflow-y: scroll;
   overflow-x: hidden;
 }
-.container-2 {
-  /* Container for RecipeDet*/
-  width: 95%;
-  margin: 2%;
-  overflow-y: auto;
-}
-.container-3 {
-  /* Container for RecipeAddForm*/
-  width: 95%;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-.container-4 {
-  /* Container for Calculate*/
+.container-rest {
+  /* Other containers */
   width: 95%;
   margin: 2%;
   overflow-y: auto;
   overflow-x: hidden;
 }
 /* Recipe.jsx */
-.container-1:first-child {
-  /* border-radius: 10px 0px 0px 0px; */
+.container-left:first-child {
   border-top-left-radius: 10px;
 }
 .recipe-container {
-  /* padding-left: 10px; */
   background-color: #f39c12;
   transition: all 0.2s;
   font-weight: bold;
-  /* display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: auto; */
   display: flex;
 }
 .recipe-container:hover {
@@ -158,7 +138,6 @@ body {
 }
 .recipe-btns > * {
   text-align: center;
-  cursor: pointer;
   font-size: 15px;
 }
 .add-calc-btns {
@@ -175,15 +154,9 @@ body {
 }
 
 /* RecipeDet */
-.recipeDet-container {
-}
-.recipeDet-title {
-  margin-bottom: 2%;
-}
+.recipeDet-title,
 .recipeDet-des {
   margin-bottom: 2%;
-}
-.recipeDet-ings {
 }
 
 /* RecipeAddForm */
@@ -228,27 +201,22 @@ body {
 }
 .remove-ing {
   background-color: #e74c3c;
-  border: none;
   width: 6%;
   color: whitesmoke;
-  cursor: pointer;
 }
 .remove-ing:hover {
   background-color: #fc7667;
 }
 .add-ing {
-  border: none;
   background-color: #27ae60;
   color: whitesmoke;
   height: 30px;
   width: 50%;
-  cursor: pointer;
 }
 .add-ing:hover {
   background-color: #41da81;
 }
 .submit-form-btn {
-  border: none;
   background-color: rgb(231, 24, 24);
   color: whitesmoke;
   height: 30px;
@@ -290,7 +258,6 @@ body {
   color: whitesmoke;
 }
 .recipeToCook-remove {
-  border: none;
   width: 15%;
   border-radius: 100%;
   color: whitesmoke;
@@ -298,7 +265,6 @@ body {
   transition: all 0.1s;
 }
 .recipeToCook-remove:hover {
-  cursor: pointer;
   transform: scale(1.2);
 }
 .ingsToCookTitle {
@@ -312,17 +278,8 @@ body {
   border: olive 1px solid;
   padding: 3px;
 }
-
 .openCalc-btn:hover {
   background-color: rgb(245, 195, 68);
-}
-@keyframes slidein {
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(0%);
-  }
 }
 
 /* scrollbar */
@@ -348,4 +305,14 @@ body {
     transparent 75%,
     transparent
   );
+}
+
+/* Animation */
+@keyframes slidein {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
 }
